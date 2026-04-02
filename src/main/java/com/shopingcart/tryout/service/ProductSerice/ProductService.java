@@ -1,4 +1,4 @@
-package com.shopingcart.tryout.product;
+package com.shopingcart.tryout.service.ProductSerice;
 
 import com.shopingcart.tryout.exceptions.ProductNotFoundException;
 import com.shopingcart.tryout.model.Category;
@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-
 public class ProductService implements IProductService{
 
 
@@ -49,7 +48,7 @@ public class ProductService implements IProductService{
         return productRepository.save(createProduct(request, category));
     }
 
-    private Product updateProduct(Product existingProduct, ProductUpdateRequest request){
+    private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request){
         existingProduct.setName(request.getName());
         existingProduct.setBrand(request.getBrand());
         existingProduct.setPrice(request.getPrice());
@@ -83,12 +82,12 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductByName(String name) {
-        return ProductRepository.finddByName(name);
+        return productRepository.findByName(name);
     }
 
     @Override
     public List<Product> getProductsByBrandAndName(String brand, String name) {
-        return ProductRepository.findByBrandAndName(brand,name);
+        return productRepository.findByBrandAndName(brand, name);
     }
 
     @Override

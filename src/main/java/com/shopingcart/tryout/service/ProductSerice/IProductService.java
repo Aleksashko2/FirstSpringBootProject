@@ -1,4 +1,4 @@
-package com.shopingcart.tryout.product;
+package com.shopingcart.tryout.service.ProductSerice;
 
 import com.shopingcart.tryout.model.Category;
 import com.shopingcart.tryout.model.Product;
