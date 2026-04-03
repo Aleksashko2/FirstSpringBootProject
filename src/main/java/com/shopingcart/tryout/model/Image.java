@@ -21,6 +21,7 @@ public class Image {
     private String fileType;
     private String filePath;
     @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private Byte[] image;
     private String downloadUrl;
 
