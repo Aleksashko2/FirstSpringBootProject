@@ -25,10 +25,9 @@ public class ImageService implements IImageService {
     private final ImageRepository imageRepository;
     private IProductService productService;
 
-
     @Override
-    public Image getImage(Long id) {
-        return imageRepository.findById(id);
+    public Image getImageById(Long id) {
+        return null;
     }
 
     @Override
@@ -72,7 +71,17 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public void updateImage(List<MultipartFile> file, Long imageId) {
+    public void updateImage(MultipartFile file, Long imageId) {
+        Image image = getImageById(imageId);
+        try {
+            image.setFileName(file.getOriginalFilename());
+            image.setFileType(file.getContentType());
 
+            image.setImage(file.getBytes());
+
+            imageRepository.save(image);
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading file bytes: " + e.getMessage());
+        }
     }
 }
