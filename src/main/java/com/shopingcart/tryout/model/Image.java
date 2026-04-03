@@ -22,12 +22,11 @@ public class Image {
     private String filePath;
     @Lob
     @Column(name = "image", columnDefinition = "LONGBLOB")
-    private Byte[] image;
+    private byte[] image;
     private String downloadUrl;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
 
 }

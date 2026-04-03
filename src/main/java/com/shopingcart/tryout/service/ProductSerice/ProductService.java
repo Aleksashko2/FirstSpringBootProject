@@ -1,6 +1,7 @@
 package com.shopingcart.tryout.service.ProductSerice;
 
 import com.shopingcart.tryout.exceptions.ProductNotFoundException;
+import com.shopingcart.tryout.exceptions.ResourceNotFoundException;
 import com.shopingcart.tryout.model.Category;
 import com.shopingcart.tryout.model.Product;
 import com.shopingcart.tryout.repository.CategoryRepository;
@@ -108,7 +109,11 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void updateProduct(Product product, long id) {
+    public Product updateProduct(ProductUpdateRequest request, long id) {
+        return productRepository.findById(id)
+                .map(existingProduct -> updateExistingProduct(existingProduct, request))
+                .map(productRepository :: save)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
     }
 }

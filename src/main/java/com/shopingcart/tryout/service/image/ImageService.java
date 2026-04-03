@@ -1,6 +1,7 @@
 package com.shopingcart.tryout.service.image;
 
 import com.shopingcart.tryout.dto.ImageDto;
+import com.shopingcart.tryout.exceptions.ResourceNotFoundException;
 import com.shopingcart.tryout.model.Image;
 import com.shopingcart.tryout.model.Product;
 import com.shopingcart.tryout.repository.ImageRepository;
@@ -27,12 +28,13 @@ public class ImageService implements IImageService {
 
     @Override
     public Image getImageById(Long id) {
-        return null;
+        return imageRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No image with id: "+ id));
     }
 
     @Override
-    public void DeleteImageByid(Long id) {
-
+    public void DeleteImageById(Long id) {
+        imageRepository.findById(id).ifPresentOrElse(imageRepository :: delete, ()-> {throw new ResourceNotFoundException("No image with id: "+ id);});
     }
 
 
@@ -46,7 +48,7 @@ public class ImageService implements IImageService {
                 Image image = new Image();
                 image.setFileName(file.getOriginalFilename());
                 image.setFileType(file.getContentType());
-                image.setImage(new SerialBlob(file.getBytes()));
+                image.setImage(file.getBytes());
                 image.setProduct(product);
 
                 String buildDownloadUrl = "/api/v1/images/image/download/";
@@ -63,7 +65,7 @@ public class ImageService implements IImageService {
                 imageDto.setDownloadUrl(savedImage.getDownloadUrl());
                 savedImageDto.add(imageDto);
 
-            }   catch(IOException | SQLException e){
+            }   catch(IOException e){
                 throw new RuntimeException(e.getMessage());
             }
         }

@@ -4,8 +4,6 @@ import com.shopingcart.tryout.exceptions.CategoryNotFoundException;
 import com.shopingcart.tryout.exceptions.ProductNotFoundException;
 import com.shopingcart.tryout.model.Category;
 import com.shopingcart.tryout.repository.CategoryRepository;
-import com.shopingcart.tryout.repository.CategoryRepository;
-import com.shopingcart.tryout.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ import java.util.Optional;
 public class CategoryService implements ICategoryService{
 
     private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
 
 
     @Override
